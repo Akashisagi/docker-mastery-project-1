@@ -4,16 +4,9 @@ on:
   push:
     branches: ["main"]
     tags: ["v*.*.*"]
-    paths:
-      - "phase3-advanced/**"
   pull_request:
     branches: ["main"]
-    paths:
-      - "phase3-advanced/**"
 
-defaults:
-  run:
-    working-directory: phase3-advanced
 
 env:
   IMAGE_NAME: docker-mastery-demo
@@ -74,7 +67,7 @@ jobs:
       - name: Build image (load locally, cached, not pushed yet)
         uses: docker/build-push-action@v6
         with:
-          context: phase3-advanced
+          context: .
           load: true
           push: false
           tags: |
