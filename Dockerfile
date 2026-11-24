@@ -23,8 +23,10 @@ FROM python:3.12-alpine
 
 WORKDIR /app
 
-# Create a dedicated, unprivileged user to run the app
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Upgrade krb5-libs and create a dedicated, unprivileged user to run the app
+RUN apk update \
+    && apk add --no-cache --upgrade 'krb5-libs>=1.22.3-r0' \
+    && addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Copy only the installed packages (no compilers/build tools) + app code
 COPY --from=builder /root/.local /home/appuser/.local
